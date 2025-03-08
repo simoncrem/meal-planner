@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}{{ recipe.name }} - Meal Planner{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title mb-4">{{ recipe.name }}</h2>
+                
+                {% if recipe.description %}
+                <p class="lead">{{ recipe.description }}</p>
+                <hr>
+                {% endif %}
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5>Nutritional Information</h5>
+                        <ul class="list-unstyled">
+                            <li>Calories: {{ recipe.calories }}</li>
+                            <li>Protein: {{ recipe.protein }}g</li>
+                            <li>Carbohydrates: {{ recipe.carbs }}g</li>
+                            <li>Fats: {{ recipe.fats }}g</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Preparation</h5>
+                        <p>Preparation Time: {{ recipe.prep_time }} minutes</p>
+                    </div>
+                </div>
+
+                <h5>Ingredients</h5>
+                <ul class="mb-4">
+                    {% for ingredient in recipe.ingredients.split('\n') %}
+                        {% if ingredient.strip() %}
+                            <li>{{ ingredient.strip() }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <h5>Instructions</h5>
+                <ol class="mb-4">
+                    {% for step in recipe.instructions.split('\n') %}
+                        {% if step.strip() %}
+                            <li class="mb-2">{{ step.strip() }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+
+                <div class="mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

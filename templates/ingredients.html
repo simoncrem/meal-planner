@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}My Ingredients - Meal Planner{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">My Ingredients</h2>
+
+    <div class="row">
+        <!-- Proteins -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title h5 mb-0">Proteins</h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        {% for protein in proteins %}
+                        <div class="list-group-item">
+                            <h6 class="mb-1">{{ protein.name }}</h6>
+                            {% if protein.variations %}
+                            <small class="text-muted">
+                                {{ protein.variations }}
+                            </small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vegetables -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title h5 mb-0">Vegetables</h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        {% for vegetable in vegetables %}
+                        <div class="list-group-item">
+                            <h6 class="mb-1">{{ vegetable.name }}</h6>
+                            {% if vegetable.variations %}
+                            <small class="text-muted">
+                                {{ vegetable.variations }}
+                            </small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carbs -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h3 class="card-title h5 mb-0">Carbs</h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        {% for carb in carbs %}
+                        <div class="list-group-item">
+                            <h6 class="mb-1">{{ carb.name }}</h6>
+                            {% if carb.variations %}
+                            <small class="text-muted">
+                                {{ carb.variations }}
+                            </small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

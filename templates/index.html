@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Meal Planner{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>Weekly Meal Plan</h2>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{{ url_for('generate_meal_plan') }}" class="btn btn-primary">Generate New Plan</a>
+    </div>
+</div>
+
+{% if meal_plans %}
+<div class="row mb-5">
+    {% for meal_plan in meal_plans %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ meal_plan.date.strftime('%A, %B %d') }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ meal_plan.recipe.name }}</h6>
+                <div class="nutritional-info mb-3">
+                    <small>
+                        Calories: {{ meal_plan.recipe.calories }} |
+                        Protein: {{ meal_plan.recipe.protein }}g |
+                        Carbs: {{ meal_plan.recipe.carbs }}g |
+                        Fats: {{ meal_plan.recipe.fats }}g
+                    </small>
+                </div>
+                <a href="{{ url_for('view_recipe', recipe_id=meal_plan.recipe.id) }}" class="btn btn-sm btn-outline-primary">View Recipe</a>
+                <form action="{{ url_for('change_meal', plan_id=meal_plan.id) }}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Pick Another Recipe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    No meal plan generated yet. Click "Generate New Plan" to create one!
+</div>
+{% endif %}
+
+<h2 class="mb-4">Available Recipes</h2>
+<div class="row">
+    {% for recipe in recipes %}
+    <div class="col-md-4 mb-4">
+        <div class="card recipe-card">
+            <div class="card-body">
+                <h5 class="card-title">{{ recipe.name }}</h5>
+                <p class="card-text">{{ recipe.description[:100] }}{% if recipe.description|length > 100 %}...{% endif %}</p>
+                <div class="nutritional-info mb-3">
+                    <small>
+                        Calories: {{ recipe.calories }} |
+                        Prep Time: {{ recipe.prep_time }} mins
+                    </small>
+                </div>
+                <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}" class="btn btn-sm btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col">
+        <div class="alert alert-info">
+            No recipes available. <a href="{{ url_for('add_recipe') }}">Add your first recipe!</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %} 
